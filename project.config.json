@@ -7,7 +7,7 @@
 		"minified": true,
 		"newFeature": true
 	},
-	"miniprogramRoot": "./dist/",
+	"miniprogramRoot": "dist/",
 	"compileType": "miniprogram",
 	"appid": "wx59b41f62c5555287",
 	"projectname": "wx-blog-stav",
