@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/home/main",
+    "pages/blog/main",
     "pages/counter/main",
     "pages/personal/main",
     "pages/index/main",
@@ -25,7 +26,7 @@
         "selectedIconPath": "/static/assets/index.png"
       },
       {
-        "pagePath": "pages/counter/main",
+        "pagePath": "pages/blog/main",
         "text": "博客",
         "iconPath": "/static/assets/news.png",
         "selectedIconPath": "/static/assets/news-active.png"
