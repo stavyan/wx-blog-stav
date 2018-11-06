@@ -2,6 +2,7 @@
   "pages": [
     "pages/home/main",
     "pages/blog/main",
+    "pages/detail/main",
     "pages/counter/main",
     "pages/personal/main",
     "pages/index/main",

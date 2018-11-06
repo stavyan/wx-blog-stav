@@ -25,9 +25,9 @@
       <loading :hidden="signShow">
         签到中...
       </loading>
-      <loading :hidden="loading">
-        获取数据中...
-      </loading>
+      <!--<loading :hidden="loading">-->
+        <!--获取数据中...-->
+      <!--</loading>-->
       <div style="height:10px;background: #eee;"></div>
       <div v-if="userData.nickName" class="zan-panel">
         <a href="../new/main" class="zan-cell zan-cell--access">
@@ -135,7 +135,6 @@
    *@blog https://stavtop.club
    *@date 2018/11/01 21:50:34
    */
-  import Bmob from '../../../static/bmob/Bmob-1.4.4.min'
   import common from '../../../static/common/common'
   import { share } from '@/utils/share'
   import { getNewsCount } from '@/utils/new'
@@ -161,11 +160,10 @@
       }
     },
     mounted () {
-      console.log(this.userData.objectId)
       this._getUserData()
-      if (this.userData.objectId) {
-        this._getNewsCount()
-      }
+      // if (this.userData.objectId) {
+      //   this._getNewsCount()
+      // }
     },
     methods: {
       // 授权获取用户信息
@@ -174,41 +172,22 @@
 
         wx.login({
           success: () => {
-            let current = Bmob.User.current()
-            console.log(current)
-            // if (current.nickName != undefined) {
-            //
-            // } else {
             wx.getUserInfo({
               success: (result) => {
                 that.authorize = false
-                console.log(result)
-                var objectId = current.objectId
+                // var objectId = current.objectId
                 var userInfo = result.userInfo
                 var nickName = userInfo.nickName
                 var avatarUrl = userInfo.avatarUrl
 
-                var query = Bmob.Query('_User')
-                // 保存用户信息
-                query.get(objectId).then(res => {
-                  res.set('nickName', nickName)
-                  res.set('userPic', avatarUrl)
-                  res.save()
-                  that.authorize = true
-                  var userData = {
-                    'nickName': nickName,
-                    'userPic': avatarUrl,
-                    'objectId': objectId,
-                    'authData': current.authData
-                  }
-                  that.userData = userData
-                  wx.setStorageSync('userData', userData)
-                }).catch(err => {
-                  console.log(err)
-                })
+                var userData = {
+                  'nickName': nickName,
+                  'userPic': avatarUrl
+                }
+                that.userData = userData
+                wx.setStorageSync('userData', userData)
               }
             })
-          // }
           }
         })
       },
@@ -218,55 +197,51 @@
         that.loading = false
         var userData = wx.getStorageSync('userData')
         if (userData === '') {
-          Bmob.User.auth().then(res => {
-            console.log(res)
-            wx.setStorageSync('userData', res)
-            that.userData = res
-          }).catch(() => {
-          })
+          // Bmob.User.auth().then(res => {
+          //   console.log(res)
+          //   wx.setStorageSync('userData', res)
+          //   that.userData = res
+          // }).catch(() => {
+          // })
         } else {
           that.userData = userData
         }
-
-        if (this.userData.objectId) {
-
-        }
-
-        var query = Bmob.Query('sign')
-        query.equalTo('user', '==', this.userData.objectId)
-        query.order('-createdAt')
-        query.find().then(res => {
-          if (res[0] !== '' && res[0] !== undefined) {
-            var day = new Date(res[0].createdAt).toDateString()
-            that.signNum = res.length
-            if (day === new Date().toDateString()) {
-              that.sign = true
-              that.signTime = res[0]
-            }
-            that.loading = true
-          } else {
-            that.loading = true
-          }
-        })
+        that.authorize = true
+        // var query = Bmob.Query('sign')
+        // query.equalTo('user', '==', this.userData.objectId)
+        // query.order('-createdAt')
+        // query.find().then(res => {
+        //   if (res[0] !== '' && res[0] !== undefined) {
+        //     var day = new Date(res[0].createdAt).toDateString()
+        //     that.signNum = res.length
+        //     if (day === new Date().toDateString()) {
+        //       that.sign = true
+        //       that.signTime = res[0]
+        //     }
+        //     that.loading = true
+        //   } else {
+        //     that.loading = true
+        //   }
+        // })
       },
       // 用户签到
-      _sign () {
-        var that = this
-        that.signShow = false
-        var pointer = Bmob.Pointer('_User')
-        var poiID = pointer.set(this.userData.objectId)
-        var query = Bmob.Query('sign')
-        query.set('user', poiID)
-        query.save().then(res => {
-          setTimeout(function () {
-            that.sign = true
-            that.signShow = true
-            that.signTime = res
-          }, 1500)
-        }).catch(err => {
-          console.log(err)
-        })
-      },
+      // _sign () {
+      //   var that = this
+      //   that.signShow = false
+      //   var pointer = Bmob.Pointer('_User')
+      //   var poiID = pointer.set(this.userData.objectId)
+      //   var query = Bmob.Query('sign')
+      //   query.set('user', poiID)
+      //   query.save().then(res => {
+      //     setTimeout(function () {
+      //       that.sign = true
+      //       that.signShow = true
+      //       that.signTime = res
+      //     }, 1500)
+      //   }).catch(err => {
+      //     console.log(err)
+      //   })
+      // },
       _share () {
         this.onShareAppMessage()
       },

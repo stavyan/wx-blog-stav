@@ -30,7 +30,7 @@
         <div class="article">
           <div class="article-item">
             <div v-for="(item, index) in articles" :key="index" class="article-list">
-              <a :href="'../detail/main?id=' + item.objectId" style="color:#000000">
+              <a :href="'../detail/main?id=' + item.Alias + '&title=' + item.Title" style="color:#000000">
                 <div class="label" v-show="index == 0 || index == 1"><span>new</span></div>
                 <h1 class="title">
                   <a>{{item.Title}}</a>

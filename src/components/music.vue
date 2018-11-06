@@ -23,7 +23,7 @@ export default {
     return {
       listen: true,
       hide: false,
-      link: 'http://music.163.com/song/media/outer/url?id=28692862.mp31'
+      link: 'http://music.163.com/song/media/outer/url?id=28692862.mp3'
     }
   },
   created () {
